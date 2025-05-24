@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import strawberry
 from strawberry.asgi import GraphQL
 from typing import List, Optional
@@ -228,18 +229,16 @@ def map_dict_to_publicacion(data: dict) -> Publicacion:
         etiquetas=data["etiquetas"]
     )
 
-    if filtro:
-        if filtro.autor:
-            data = [p for p in data if p["autor"] == filtro.autor]
-        if filtro.categoria:
-            data = [p for p in data if p["categoria"] == filtro.categoria]
-        if filtro.publicada is not None:
-            data = [p for p in data if p["publicada"] == filtro.publicada]
-
-    return [map_dict_to_publicacion(p) for p in data]
-
 schema = strawberry.Schema(query=Query)
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def index():
