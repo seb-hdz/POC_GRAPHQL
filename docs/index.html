@@ -173,10 +173,11 @@
       const DEFAULT_API_HOST="172.30.217.244";
 
       const queryString = window.location.search;
+      const protocol = window.location.protocol;
       const urlParams = new URLSearchParams(queryString);
       const host = urlParams.get('from') ?? DEFAULT_API_HOST;
 
-      const API_URL = `http://${host}:8000/graphql`;
+      const API_URL = `${protocol}://${host}:8000/graphql`;
 
       const app = createApp({
         setup() {
