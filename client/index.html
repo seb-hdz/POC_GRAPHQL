@@ -15,7 +15,7 @@
       rel="stylesheet"
       href="https://fonts.bunny.net/css?family=roboto:400,500,700"
     />
-    <title>Publicaciones</title>
+    <title>Publicaciones | PUBLISOFT</title>
     <script type="importmap">
       {
         "imports": {
@@ -170,7 +170,13 @@
       import { createApp, ref, watch, onMounted } from "vue";
       import { createVuetify } from "vuetify";
 
-      const API_URL = "http://localhost:8000/graphql";
+      const DEFAULT_API_HOST="172.30.217.244";
+
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const host = urlParams.get('from') ?? DEFAULT_API_HOST;
+
+      const API_URL = `http://${host}:8000/graphql`;
 
       const app = createApp({
         setup() {
